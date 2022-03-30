@@ -1,0 +1,23 @@
+controller:
+  kind: DaemonSet
+  nodeSelector:
+    beta.kubernetes.io/os: "linux"
+  service:
+    type: LoadBalancer
+    enableHttp: true
+    enableHttps: true
+    annotations:
+      service.beta.kubernetes.io/azure-load-balancer-internal: "true"
+  admissionWebhooks:
+      enabled: true
+  containerPort:
+    https: 443
+    http: 80
+  extraArgs:
+    default-ssl-certificate: "default-tls-secret"
+rbac:
+  create: true
+defaultBackend:
+  nodeSelector:
+    beta.kubernetes.io/os: "linux"
+  enabled: true
